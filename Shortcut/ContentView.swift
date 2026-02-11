@@ -59,6 +59,20 @@ struct ContentView: View {
                     .buttonStyle(.plain)
                     
                     // LINK
+                    NavigationLink(destination: SafariShortcuts()) {
+                        Text("Safari Shortcuts")
+                            .font(.title.bold())
+                            .foregroundColor(.black)
+                            .padding()
+                            .frame(width: 350)
+                            .background(Color(.white.opacity(0.8)))
+                            .cornerRadius(40)
+                            .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
+                           
+                    }
+                    .buttonStyle(.plain)
+                    
+                    // LINK
                     
                     NavigationLink(destination: Favorites()) {
                         Text("Favorite Shortcuts")
