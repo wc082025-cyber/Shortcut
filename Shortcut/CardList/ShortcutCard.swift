@@ -7,29 +7,48 @@
 
 import SwiftUI
 
-public struct ShortcutCard: View {
-    let label: String
-    let icons: [String]
+struct ShortcutCard: View {
+    let shortcut: ShortcutModel
+    let onTap: (ShortcutModel) -> Void
     
-    public init(label: String, icons: [String]) {
-        self.label = label
-        self.icons = icons
-    }
-    public var body: some View {
-        HStack(spacing: 10) {
-            Text("\(label)")
-                .font(.title)
+    var body: some View {
+        HStack {
+            // The Label (e.g., "Copy")
+            Text(shortcut.label)
+                .font(.headline)
+                .fontWeight(.bold)
                 .foregroundColor(.black)
             
-            ForEach(icons, id: \.self) { name in
-                Image(systemName: name)
-                    .foregroundColor(.black)
-                    .font(Font.title.bold())
+            Spacer()
+            
+            // The Icons (e.g., Cmd + C)
+            HStack(spacing: 5) {
+                ForEach(0..<shortcut.icons.count, id: \.self) { index in
+                    // The Icon
+                    Image(systemName: shortcut.icons[index])
+                        .font(.title2)
+                        .foregroundColor(.black)
+                    
+                    // Add a "+" if it's not the last icon
+                    if index < shortcut.icons.count - 1 {
+                        Image(systemName: "plus")
+                            .font(.body)
+                            .foregroundColor(.gray)
+                    }
+                }
             }
         }
-        .padding(10)
+        .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.yellow))
+        .background(Color.white)
+        .cornerRadius(40)
+        .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+        .padding(.horizontal)
         
+        .onTapGesture { onTap(shortcut) }
+        
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(shortcut.label) shortcut, \(shortcut.description)")
     }
 }
+
